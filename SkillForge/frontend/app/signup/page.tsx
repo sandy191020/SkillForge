@@ -1,0 +1,202 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Sparkles, CheckCircle } from 'lucide-react';
+
+export default function SignupPage() {
+  const router = useRouter();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { signUp } = await import('@/lib/auth');
+      await signUp(email, password, name);
+      setError('');
+      setSuccess(true);
+      // Redirect to login after 3 seconds
+      setTimeout(() => {
+        router.push('/login');
+      }, 3000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to create account. Please try again.');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl">
+        {/* Left Side - Form */}
+        <div className="bg-[#1a1a2e] p-12 flex flex-col justify-center">
+          <div className="max-w-md mx-auto w-full">
+            <h1 className="text-4xl font-bold text-white mb-2">Create Account</h1>
+            <p className="text-gray-400 mb-8">Start your journey today</p>
+
+            {error && (
+              <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="mb-6 p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-sm">
+                <p className="font-semibold mb-1">Account created successfully! 🎉</p>
+                <p className="text-xs">Please check your email to verify your account. Redirecting to login...</p>
+              </div>
+            )}
+
+            <form onSubmit={handleSignup} className="space-y-5">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#0f0f1a] border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  placeholder="John Doe"
+                  required
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#0f0f1a] border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  placeholder="magic@example.com"
+                  required
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#0f0f1a] border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  placeholder="••••••••"
+                  required
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#0f0f1a] border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  placeholder="••••••••"
+                  required
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30"
+              >
+                {loading ? 'Creating account...' : 'Sign up'}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-400 text-sm">
+                Already have an account?{' '}
+                <Link href="/login" className="text-purple-400 hover:text-purple-300 font-semibold transition-colors">
+                  Sign in
+                </Link>
+              </p>
+            </div>
+
+            <div className="mt-8 text-center text-xs text-gray-500">
+              By signing up, you agree to our{' '}
+              <a href="#" className="text-gray-400 hover:text-white transition-colors underline">terms of service</a>
+              {' '}and{' '}
+              <a href="#" className="text-gray-400 hover:text-white transition-colors underline">privacy policy</a>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Branding */}
+        <div className="bg-gradient-to-br from-purple-600 via-purple-500 to-blue-500 p-12 flex flex-col justify-center items-center text-white relative overflow-hidden">
+          {/* Decorative circles */}
+          <div className="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 left-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+
+          <div className="relative z-10 text-center max-w-md">
+            {/* Logo */}
+            <div className="flex justify-center mb-8">
+              <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-xl flex items-center justify-center shadow-2xl">
+                <Sparkles className="w-10 h-10 text-white" />
+              </div>
+            </div>
+
+            <h2 className="text-4xl font-bold mb-4">SkillForge</h2>
+            <p className="text-lg text-white/90 mb-12">
+              Master your interviews with AI-powered coaching and real-time feedback
+            </p>
+
+            {/* Features */}
+            <div className="space-y-4 text-left">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <span className="text-white/90">AI-powered interview practice</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <span className="text-white/90">Real-time feedback & scoring</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <span className="text-white/90">Personalized coaching</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
