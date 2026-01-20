@@ -2,7 +2,10 @@
 
 <div align="center">
 
-![SkillForge Logo](https://via.placeholder.com/200x200?text=SkillForge)
+<img width="1878" height="894" alt="image" src="https://github.com/user-attachments/assets/55bc5c14-774c-44c0-859a-a34964711c5e" />
+<img width="1631" height="810" alt="image" src="https://github.com/user-attachments/assets/8cce337d-b984-44ee-8eeb-c27b02e50013" />
+
+
 
 **Master Your Career Journey with AI**
 
@@ -162,16 +165,7 @@ SkillForge/
 - [Backend README](backend/README.md) - Backend services documentation
 - [API Documentation](http://localhost:8000/docs) - Interactive API docs (when running)
 
-## 🎨 Screenshots
 
-### Landing Page
-![Landing Page](https://via.placeholder.com/800x400?text=Landing+Page)
-
-### Resume Analyzer
-![Resume Analyzer](https://via.placeholder.com/800x400?text=Resume+Analyzer)
-
-### AI Interview Coach
-![Interview Coach](https://via.placeholder.com/800x400?text=Interview+Coach)
 
 ## 🧪 Development
 
