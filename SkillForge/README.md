@@ -214,11 +214,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Ollama](https://ollama.ai/) - Local AI models
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 
-## 📞 Support
-
-- **Email**: support@skillforge.com
-- **Discord**: [Join our community](https://discord.gg/skillforge)
-- **Twitter**: [@SkillForge](https://twitter.com/skillforge)
 
 ## 🗺️ Roadmap
 
@@ -236,6 +231,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ by the SkillForge Team**
 
-[Website](https://skillforge.com) • [Documentation](PROJECT_GUIDE.md) • [Report Bug](https://github.com/yourusername/skillforge/issues) • [Request Feature](https://github.com/yourusername/skillforge/issues)
+• [Report Bug](https://github.com/yourusername/skillforge/issues) • [Request Feature](https://github.com/yourusername/skillforge/issues)
 
 </div>
